@@ -80,37 +80,7 @@ const Login = async (req, res) => {
     return res.send({ status: false, messege: "something went wrong" });
   }
 };
-// const Login = async(req,res) =>{
-//     const {email,password} = req.body;
-//     const findUser = await UserModel.find({email,password})
-//     console.log(findUser);
-  
-//     try {
 
-//         if(!findUser){
-//             res.send({"message":"User not found"})
-//         }
-//       else if(await argon.verify(findUser.password , password)){
-//             let token = jwt.sign(
-//                 {email:findUser.email},
-//                 process.env.SECRET_KEY,
-//                 {
-//                     expiresIn:"2 days"
-//                 }
-//             );
-//             let refreshToken = jwt.sign(
-//                 {email:findUser.email},
-//                 process.env.REFRESH_KEY,
-//                 {
-//                     expiresIn:"7 days"
-//                 }
-//             )
-//             res.send({"token":token,"refreshToken":refreshToken})
-//         }
-//     } catch (error) {
-//         res.send({"message":error})
-//     }
-// }
 
 module.exports = {
     Signup,
