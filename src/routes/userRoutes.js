@@ -6,7 +6,7 @@ const UserModel =require("../models/userModel")
 
 const Signup = async(req,res) =>{
 
-       const {name,email,password,age}= req.body;
+       const {name,email,password}= req.body;
       
         const hash = await argon.hash(password)
         const userExists = await UserModel.findOne({email:email})
@@ -20,7 +20,6 @@ const Signup = async(req,res) =>{
             name,
             email,
             password:hash,
-            age
         })
 
         await newUser.save()
@@ -63,7 +62,7 @@ const Login = async (req, res) => {
     console.log(user);
   if (user ) {
     let token = jwt.sign(
-      { email: user.email, name: user.name, role: user.role },
+      { email: user.email, name: user.name},
       process.env.SECRET_KEY,
       {
         expiresIn: "2 days",
@@ -71,7 +70,7 @@ const Login = async (req, res) => {
     );
 
     let refreshToken = jwt.sign(
-      { email: user.email, name: user.name, role: user.role },
+      { email: user.email, name: user.name},
         process.env.REFRESH_KEY,
       { expiresIn: "7 days" }
     );
@@ -81,8 +80,30 @@ const Login = async (req, res) => {
   }
 };
 
+const getProfile = async(req,res) =>{
+ 
+    let token = req.headers["authorization"]
+ 
+  try {
+    if(token){
+      let users = await UserModel.find()
+      
+        res.send(users)
+    
+    }
+    
+  } catch (error) {
+    res.send({"message":"Something went wrong"})
+  }
+}
+
+const calculate = async(req,res) =>{
+
+}
+
 
 module.exports = {
     Signup,
-    Login
+    Login,
+    getProfile
 }

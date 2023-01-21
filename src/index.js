@@ -13,6 +13,7 @@ app.use(cors({origin:true,credentials:true}))
 
 app.post("/user/signup",userRoute.Signup)
 app.post("/user/login",userRoute.Login)
+app.get("/user",userRoute.getProfile)
 app.get("/",(req,res)=>res.send("Hello"))
 
 app.listen(PORT,async()=>{
