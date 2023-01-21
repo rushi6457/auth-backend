@@ -81,13 +81,12 @@ const Login = async (req, res) => {
 };
 
 const getProfile = async(req,res) =>{
-  const user = req.query
-  console.log(user);
+  
     let token = req.headers["authorization"]
  
   try {
     if(token){
-      let users = await UserModel.findOneById({id})
+      let users = await UserModel.find()
       
         res.send(users)
     
