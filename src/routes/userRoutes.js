@@ -82,15 +82,13 @@ const Login = async (req, res) => {
 
 const getProfile = async(req,res) =>{
   
-  let token = req.headers["authorization"]
+  
 
   try {
     
-    if(token){
-          let users = await UserModel.find()
+      let users = await UserModel.find()
      
         res.send(users)
-    }
     
   } catch (error) {
     res.send({"message":"Something went wrong"})
