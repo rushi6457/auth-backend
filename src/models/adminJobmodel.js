@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 const FormSchema = new mongoose.Schema({
 
-    companyName:{
+    company_name:{
         type:String,
         required:true,
     },

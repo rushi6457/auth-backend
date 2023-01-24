@@ -1,13 +1,4 @@
 
-// const express = require("express")
-// const app = express.Router();
-// const {job,getjob} = require("../controller/adminController")
-
-// app.post("/savejob",job)
-// app.get("/getjob",getjob)
-// module.exports = app
-
-
 const express = require('express');
 const JobModel  = require("../models/adminJobmodel") 
 const mongoose = require("mongoose")
@@ -18,9 +9,9 @@ const argon = require("argon2")
 const Job = async(req,res) =>{
 
     const {company_name,position,contract,location} = req.body;
-
+    console.log(company_name,position,contract,location);
     try {
-        const newJob =  new FormModel({
+        const newJob =  new JobModel({
             company_name,
             position,
             contract,
@@ -28,16 +19,16 @@ const Job = async(req,res) =>{
         })
      
         await newJob.save()
-        return res.send({"message":"Job posted successfully" , newJob})
+       return  res.send({"message":"Job posted successfully" , newJob}).status(200)
     } catch (error) {
-         return   res.send(error)
+            res.send(error)
     }
 }
 
 const getAlljobs = async(req,res) =>{
 
         try {
-            let jobs = await FormModel.find()
+            let jobs = await JobModel.find()
            return  res.send(jobs)
         } catch (error) {
            return res.send(error)
