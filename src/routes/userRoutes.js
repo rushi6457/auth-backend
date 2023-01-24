@@ -25,7 +25,7 @@ const Signup = async(req,res) =>{
         })
 
         await newUser.save()
-        res.send({"message":"Admin created successfully"}).status(201)
+        res.send({"message":"Admin created successfully",newUser}).status(201)
           }
           else{
               const newUser = new UserModel({
@@ -36,7 +36,7 @@ const Signup = async(req,res) =>{
         })
 
         await newUser.save()
-        res.send({"message":"User created successfully"}).status(201)
+        res.send({"message":"User created successfully",newUser}).status(201)
           }
     }
         } catch (error) {
