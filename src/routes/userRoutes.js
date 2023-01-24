@@ -7,7 +7,7 @@ const UserModel =require("../models/userModel")
 const Signup = async(req,res) =>{
 
        const {name,email,password}= req.body;
-      
+       
         const hash = await argon.hash(password)
         const userExists = await UserModel.findOne({email:email})
       
@@ -16,14 +16,28 @@ const Signup = async(req,res) =>{
             res.send({"message" : "User already exists please login to proceed"})
         }
         else{
-        const newUser = new UserModel({
+          if(email.includes("@masaischool.com")){
+            const newUser = new UserModel({
             name,
             email,
             password:hash,
+            role:"admin"
+        })
+
+        await newUser.save()
+        res.send({"message":"Admin created successfully"}).status(201)
+          }
+          else{
+              const newUser = new UserModel({
+            name,
+            email,
+            password:hash,
+            role:"user"
         })
 
         await newUser.save()
         res.send({"message":"User created successfully"}).status(201)
+          }
     }
         } catch (error) {
             res.send(error)
@@ -82,8 +96,6 @@ const Login = async (req, res) => {
 
 const getProfile = async(req,res) =>{
   
-  
-
   try {
     
       let users = await UserModel.find()
@@ -94,11 +106,6 @@ const getProfile = async(req,res) =>{
     res.send({"message":"Something went wrong"})
   }
 }
-
-const calculate = async(req,res) =>{
-
-}
-
 
 module.exports = {
     Signup,
