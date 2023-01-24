@@ -4,11 +4,11 @@ const FormSchema = new mongoose.Schema({
 
     company_name:{
         type:String,
-        required:true,
+     
     },
     position:{
         type:String,
-        required:true
+       
     },
     contract:{
         type:Boolean,
