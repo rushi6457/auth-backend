@@ -14,7 +14,7 @@ app.use(cors({origin:true,credentials:true}))
 
 app.post("/user/signup",userRoute.Signup)
 app.post("/user/login",userRoute.Login)
-app.post("/admin", jobRouter.Job);
+app.post("/admin/job", jobRouter.Job);
 app.post("/admin/alljobs", jobRouter.getAlljobs);
 app.get("/user",userRoute.getProfile)
 app.get("/",(req,res)=>res.send("Hello"))

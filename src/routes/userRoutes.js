@@ -73,10 +73,11 @@ const validateUser = async (data) => {
 const Login = async (req, res) => {
   let { email, password } = req.body;
   let user = await validateUser({ email, password });
-    console.log(user);
-  if (user ) {
+    
+      if(user && email.includes("@masaischool.com")){
+         if (user  ) {
     let token = jwt.sign(
-      { email: user.email, name: user.name},
+      { email: user.email, name: user.name,role:user.role},
       process.env.SECRET_KEY,
       {
         expiresIn: "2 days",
@@ -88,10 +89,33 @@ const Login = async (req, res) => {
         process.env.REFRESH_KEY,
       { expiresIn: "7 days" }
     );
-     res.status(200).send({ "Message": "Login successfull" , token, refreshToken });
+     res.status(200).send({ "Message": "Admin Login successfull" , token, refreshToken,role:"Admin" });
   } else {
     return res.send({ status: false, messege: "something went wrong" });
   }
+      }
+      else{
+
+           if (user  ) {
+    let token = jwt.sign(
+      { email: user.email, name: user.name,role:user.role},
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "2 days",
+      }
+    );
+
+    let refreshToken = jwt.sign(
+      { email: user.email, name: user.name},
+        process.env.REFRESH_KEY,
+      { expiresIn: "7 days" }
+    );
+     res.status(200).send({ "Message": "Login successfull" , token, refreshToken ,role:"User" });
+  } else {
+    return res.send({ status: false, messege: "something went wrong" });
+  }
+
+      }
 };
 
 const getProfile = async(req,res) =>{
@@ -107,8 +131,19 @@ const getProfile = async(req,res) =>{
   }
 }
 
+const getAdmin = async(req,res) =>{
+
+      let users = await UserModel.find()
+      console.log(users);
+
+      // users.map((el)=>{
+
+      // })
+}
+
 module.exports = {
     Signup,
     Login,
-    getProfile
+    getProfile,
+    getAdmin
 }
